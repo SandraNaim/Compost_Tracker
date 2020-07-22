@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextInput, View, Button, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { Text, Image, TextInput, View, Button, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 
 
 export default class Landing_page extends Component {
@@ -17,29 +17,43 @@ export default class Landing_page extends Component {
     }
     render() {
         // const [value, onChangeText] = React.useState('Useless Placeholder');
+        const { navigate } = this.props.navigation;
+
         return (
-            <ScrollView>
+            
                 <View style={styles.container}>
-                    <View style={{ backgroundColor: '#27ae60', height: 50, alignItems: 'center' }}>
-                        <Text
-                            style={styles.page_title}
-                        >Composting Tracker</Text>
+                    
+                    <View >
+                        <Text style={styles.mycompostStyle}>
+                        MyCompost
+                        </Text>
+                    </View>
+                    <View style={{alignItems:'center'}}>
+                        <Image source={require('./images/welcome3.jpg')}
+                            style={styles.imageStyle}
+                        />
                     </View>
                     <View style={{alignItems: "center"}}>
                       <Text
                         style={styles.welcomeTitle}
-                      >Welcome</Text>
+                      >Welcome
+                      </Text>
+                      {/* <Text style={styles.welcomeTitleUnder}>
+                          Compost Tracker
+                      </Text> */}
+
                     </View>
-                    <View style={{ paddingRight: 15, paddingLeft: 15, marginTop: 100}}>
+                    <View style={{ paddingRight: 15, paddingLeft: 15, marginTop: 30}}>
                         <View >
-                            <Text
+                            {/* <Text
                                 style={styles.textStyle}
-                            >Login here if you are a user</Text>
+                            >Login here if you are a user</Text> */}
                             <TouchableOpacity
                                 style={styles.SubmitButtonStyle}
                                 activeOpacity={.5}
-                                onPress={() => Alert.alert('Simple Button to login')}
-                            >
+                                onPress={() =>
+                                    navigate('Login_page')
+                                }                              >
                                 <Text style={styles.submit_style}> Login </Text>
                             </TouchableOpacity>
                         </View>
@@ -50,14 +64,15 @@ export default class Landing_page extends Component {
                             <TouchableOpacity
                                 style={styles.SubmitButtonStyle}
                                 activeOpacity={.5}
-                                onPress={() => Alert.alert('Simple Button to register')}
-                            >
+                                onPress={() =>
+                                    navigate('Register_page')
+                                }                              >
                                 <Text style={styles.submit_style}> Register </Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </View>
-            </ScrollView>
+            
         )
     }
 }
@@ -65,9 +80,17 @@ export default class Landing_page extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
+        // flexDirection: 'column',
+        backgroundColor: '#16a085',
+        height: '100%',
         // justifyContent: 'center',
         // alignItems: 'center',
+    },
+    mycompostStyle: {
+        fontFamily: 'DancingScript-VariableFont_wght',
+        textAlign: 'center',
+        fontSize: 70,
+        margin: 30,
     },
     page_title: {
         fontFamily: 'Georgia, Times, Times New Roman, serif',
@@ -78,9 +101,9 @@ const styles = StyleSheet.create({
     },
     welcomeTitle: {
         fontFamily: "Lobster-Regular", 
-        fontSize: 45, 
-        marginTop: 100,
-        marginBottom: -30,
+        fontSize: 35, 
+        marginTop: 30,
+        // marginBottom: -30,
     },
     textStyle: {
         fontFamily: 'sans-serif',
@@ -89,6 +112,10 @@ const styles = StyleSheet.create({
         marginTop: 30,
         marginBottom: 10,
         // alignItems: 'left', 
+    },
+    welcomeTitleUnder:{
+        fontFamily: 'Georgia, Times, Times New Roman, serif',
+        fontSize: 15
     },
     
     SubmitButtonStyle: {
@@ -109,6 +136,15 @@ const styles = StyleSheet.create({
         color: '#fff',
         textAlign: 'center',
         fontSize: 20,
+    },
+    imageStyle: {
+       
+        width: 220,
+        height: 200,
+        borderRadius: 150 / 2,
+        overflow: "hidden",
+        borderWidth: 3,
+        borderColor: 'white'
     }
 
 })

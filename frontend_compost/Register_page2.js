@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, TextInput, View, Button, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { API_URL } from './constants';
 
 export default class Register_page2 extends Component {
     constructor(props) {
@@ -40,12 +41,6 @@ export default class Register_page2 extends Component {
         let phone = this.state.phone;
         let password = this.state.password;
         this.createUserProfile({ first_name, last_name, email, phone, password });
-        // this.props.first_name = "";
-        // this.props.last_name = "";
-        // this.state.email = "";
-        // this.state.password = "";
-        // this.state.phone = "";
-
     }
 
     createUserProfile = async props => {
@@ -61,7 +56,7 @@ export default class Register_page2 extends Component {
       try {
 
         const response = await fetch(
-            `http://192.168.1.71:8000/api/user`,
+            `${API_URL}/api/user`,
             {
                 method: "POST",
                 body,
@@ -72,14 +67,14 @@ export default class Register_page2 extends Component {
         
         const result = await response.json();
         if (result.success) {
-            
+            //console.log('succes: ', result)
             const { navigate } = this.props.navigation;
             navigate('Welcome_page');
             this.props.history.push(`/profile/${result.message.id}`);
             // Swal.fire('New Client Added')
         }
       } catch(error) {
-        //console.log(error);
+        //console.log('new error',error);
       }
     }
 
@@ -90,15 +85,15 @@ export default class Register_page2 extends Component {
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <View style={{ backgroundColor: '#27ae60', height: 50, alignItems: 'center' }}>
+                    <View style={{ backgroundColor: '#16a085', height: 50, alignItems: 'center' }}>
                         <Text
                             style={styles.page_title}
-                        >Create Account</Text>
+                        >Personal Information</Text>
                     </View>
                     <View style={{ paddingRight: 15, paddingLeft: 15 }}>
-                        <View style={{ height: 50 }}>
+                        {/* <View style={{ height: 50 }}>
                             <Text style={styles.personal_info}>Personal Information</Text>
-                        </View>
+                        </View> */}
                         <Text>{"\n"}</Text>
                         <Text
                             style={styles.textStyle}
@@ -125,6 +120,7 @@ export default class Register_page2 extends Component {
                         >Password</Text>
                         <TextInput
                             keyboardType={"default"}
+                            secureTextEntry={true}
                             style={styles.inputStyle}
                             onChangeText={text => this.setPasswordValue(text)}
                             value={this.state.password}
@@ -169,7 +165,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#ecf0f1',
         borderWidth: 1,
         // width: 250,
-        fontSize: 20,
+        fontSize: 18,
+        textAlign: 'left',
     },
     textStyle: {
         fontFamily: 'sans-serif',

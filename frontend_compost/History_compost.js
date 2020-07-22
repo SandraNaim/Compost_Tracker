@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, TextInput, View, Button, StyleSheet, ScrollView, TouchableOpacity, Alert, Image, ImageBackground, CheckBox } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { API_URL } from './constants'
 
 
 export default class History_compost extends Component {
@@ -8,6 +9,7 @@ export default class History_compost extends Component {
         super(props);
         this.state = {
             check: false,
+            histComp: [],
         }
     }
 
@@ -16,6 +18,20 @@ export default class History_compost extends Component {
             this.setState({
                 check: !this.state.check
             })
+        }
+    }
+
+    async componentDidMount() {
+        try {
+            const response = await fetch(`${API_URL}/api/element`);
+            const json = await response.json();
+            if (json.success === true) {
+
+                this.setState({
+                    histComp:this.groupData(json.data),
+                });
+            }
+        } catch (error) {
         }
     }
 
@@ -31,24 +47,14 @@ export default class History_compost extends Component {
                     <View style={styles.containerTank}>
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={styles.dateTitle}>Date: </Text>
-                            <TextInput
-                                style={styles.inputStyleTemp}
-                                value={this.inputValue}
-                                editable={false}
-                            />
+
                         </View>
-                        <View>
-                            <View style={{ flexDirection: 'row' }}>
+                        {this.state.histComp.map((comp, index) => {
+                            return (<View key={index} style={{ flexDirection: 'row' }}>
                                 <Text>{'\u2B24'}</Text>
-                                <Text style={styles.componentSubTitle}>Component 1</Text>
-                            </View>
-                        </View>
-                        <View>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text>{'\u2B24'}</Text>
-                                <Text style={styles.componentSubTitle}>Component 2</Text>
-                            </View>
-                        </View>
+                                <Text style={styles.componentSubTitle}>{comp.element_id}</Text>
+                            </View>)
+                        })}
                     </View>
                 </ScrollView>
             </View>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, TextInput, View, Button, StyleSheet, ScrollView, TouchableOpacity, Alert, Image, ImageBackground, CheckBox } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-community/async-storage';
+import {API_URL} from './constants'
 
 
 export default class Choose_Name extends Component {
@@ -39,7 +40,6 @@ export default class Choose_Name extends Component {
         // event.preventDefault();
         let tank_name = this.state.tank_name;
         let compost_date = this.state.compost_date;
-
         this.createCompostProfile({ tank_name, compost_date });
     }
 
@@ -53,7 +53,7 @@ export default class Choose_Name extends Component {
             if (value !== null) {
                // console.log('body => ', body);
                 const response = await fetch(
-                    `http://192.168.1.71:8000/api/compost`,
+                    `${API_URL}/api/compost`,
                     {
                         method: "POST",
                         body,
@@ -69,7 +69,7 @@ export default class Choose_Name extends Component {
                 const result = await response.json();
                 if (result.success) {
                     const { navigate } = this.props.navigation;
-                    navigate('Steps_page')
+                    navigate('Steps_page', {comp_id: result.data.id})
                     // this.props.history.push(`/profile/${result.message.id}`);
                     // Swal.fire('New Client Added')
                 }
@@ -103,6 +103,7 @@ export default class Choose_Name extends Component {
                         style={styles.SubmitButtonStyle}
                         activeOpacity={.5}
                         onPress={() => {
+                            console.log("hey I am Here =====>", this.props.tanks );
                             this.props.setTanks([...this.props.tanks, { name: this.state.tank_name }])
                             // navigate('Tanks')
                             this.handleCompostSubmit()
@@ -110,12 +111,7 @@ export default class Choose_Name extends Component {
                         }
                     >
                         <View style={{ alignItems: 'center' }}>
-                            <Text
-                                style={{
-                                    fontSize: 20,
-                                }}>
-                                {this.state.compost_date}
-                            </Text>
+                            
                         </View>
                         <Text style={styles.submit_style}> SUBMIT </Text>
                     </TouchableOpacity>
@@ -143,10 +139,10 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         // width: 250,
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 18,
     },
     SubmitButtonStyle: {
-        marginTop: 20,
+        marginTop: 10,
         paddingTop: 10,
         paddingBottom: 10,
         marginBottom: 10,

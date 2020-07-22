@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { Text, TextInput, View, Button, StyleSheet, ScrollView, TouchableOpacity, Alert, Image, ImageBackground, CheckBox } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
 export default class Tanks extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tank_name: 'Tank Name'
+
         }
     }
 
@@ -20,7 +19,7 @@ export default class Tanks extends Component {
             <View>
                 <ScrollView >
                     <View style={styles.container}>
-                        <Text style={styles.bigTitle}>Composting Tanks</Text>
+                        <Text style={styles.bigTitle}>Your Composting Tanks </Text>
 
                         <View style={styles.allTanks}>
                             <View style={{ flexDirection: 'row', }}>
@@ -29,21 +28,21 @@ export default class Tanks extends Component {
                                         style={styles.SubmitButtonStyle}
                                         activeOpacity={.5}
                                         onPress={() =>
-                                             navigate('Choose_Name')
+                                            navigate('Choose_Name')
                                             //this.handleCompostSubmit()
                                         }
                                     >
                                         <Text style={styles.buttonTitle}>+</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={{ fontSize: 25, marginLeft: 20, marginTop: 65 }} >
+                                {/* <View style={{ fontSize: 25, marginLeft: 20, marginTop: 65 }} >
                                     <Icon.Button
                                         name='hand-o-left'
                                         backgroundColor='#16a085'
                                     />
-                                </View>
+                                </View> */}
                                 <View>
-                                    <Text style={{ fontSize: 25, marginLeft: 20, width: 150, marginTop: 50 }} >Add New Tank Here </Text>
+                                    <Text style={{ fontSize: 23, marginLeft: 23, width: 200, marginTop: 50 }} >Add New Tank </Text>
                                 </View>
                             </View>
                             <View>
@@ -54,10 +53,10 @@ export default class Tanks extends Component {
                                                 style={styles.eachTank}
                                                 activeOpacity={.5}
                                                 onPress={() =>
-                                                    navigate('Each_Tank_Info', { tank })
+                                                    navigate('Each_Tank_Info', { tank, comp_id: tank.id })
                                                 }
                                             >
-                                                <Text style={styles.tankName}>{tank.name}</Text>
+                                                <Text style={styles.tankName}>{tank.tank_name}</Text>
                                             </TouchableOpacity>
                                         )
                                     })
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
         paddingRight: 10,
     },
     allTanks: {
-        marginTop: 70,
+        marginTop: 50,
         flex: 1,
         // flexDirection: 'row',
         // justifyContent: 'space-between',
@@ -88,18 +87,20 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         marginBottom: 10,
-        // marginLeft: 80,
+         marginLeft: 20,
         // marginRight: 30,
-        backgroundColor: 'white',
+        backgroundColor: '#16a085',
         borderRadius: 10,
         borderColor: '#fff',
-        width: 150,
+        width: 100,
         alignItems: 'center',
         borderWidth: 4,
         borderColor: '#16a085',
+
     },
     buttonTitle: {
-        fontSize: 100,
+        fontSize: 50,
+        color: 'white',
     },
     bigTitle: {
         textAlign: "center",

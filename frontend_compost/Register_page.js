@@ -15,7 +15,7 @@ export default class Register_page extends Component {
         this.setState({
             first_name: text
         })
-        this.props.onHandleChange(text, 'first_name')
+   this.props.onHandleChange(text, 'first_name')
     }
     setLastNameValue = (text) => {
         this.setState({
@@ -29,15 +29,15 @@ export default class Register_page extends Component {
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <View style={{ backgroundColor: '#27ae60', height: 50, alignItems: 'center' }}>
+                    <View style={{ backgroundColor: '#16a085', height: 50, alignItems: 'center' }}>
                         <Text
                             style={styles.page_title}
-                        >Create Account</Text>
+                        >Personal Information</Text>
                     </View>
                     <View style={{ paddingRight: 15, paddingLeft: 15 }}>
-                    <View style={{ height: 50 }}>
+                        {/* <View style={{ height: 50 }}>
                             <Text style={styles.personal_info}>Personal Information</Text>
-                        </View>
+                        </View> */}
                         <Text>{"\n"}</Text>
                         <Text>{"\n"}</Text>
                         <Text
@@ -49,7 +49,7 @@ export default class Register_page extends Component {
                             onChangeText={text => this.setFirstNameValue(text)}
                             value={this.state.first_name}
                         />
-                        
+
                         <Text>{"\n"}</Text>
                         <Text
                             style={styles.textStyle}
@@ -87,10 +87,10 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
     },
     personal_info: {
-        fontSize: 30, 
-        marginTop: 45, 
-        fontFamily: "Yantramanav-Bold",  
-        textAlign:"center", 
+        fontSize: 30,
+        marginTop: 45,
+        fontFamily: "Yantramanav-Bold",
+        textAlign: "center",
     },
     inputStyle: {
         height: 40,
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         // width: 250,
         textAlign: 'left',
-        fontSize: 20,
+        fontSize: 18,
     },
     textStyle: {
         fontFamily: 'sans-serif',

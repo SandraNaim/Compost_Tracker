@@ -53,4 +53,12 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function composts()
+    {
+        return $this->hasMany(Compost::class);
+    }
+
 }

@@ -24,8 +24,18 @@ export default class Steps_page extends Component {
                             <ProgressSteps>
                                 <ProgressStep label="First Step">
                                     <View>
-                                        <Text style={{ textAlign: 'center', marginTop: 5, fontSize: 18, fontWeight: 'bold' }}>Collect enough Green / Brown materials</Text>
-                                        <Fill_component />
+                                        <Text style={{ textAlign: 'center', marginTop: 5, fontSize: 18, fontWeight: 'bold' }}>Choose where you should put your compost pile</Text>
+                                        <Text>{'\n'}</Text>
+                                        <Text>{'\u2B24'}</Text>
+                                        <Text>Shaded area will help prevent drying out in summer</Text>
+                                        <Text>{'\u2B24'}</Text>
+                                        <Text>Avoid areas that will interfere with lawn and garden activities </Text>
+                                        <Text>{'\u2B24'}</Text>
+                                        <Text>Adequate work area around the pile</Text>
+                                        <Text>{'\u2B24'}</Text>
+                                        <Text>Area for storage</Text>
+                                        <Text>{'\u2B24'}</Text>
+                                        <Text>Water available</Text>
                                     </View>
                                 </ProgressStep>
                                 <ProgressStep label="Second Step">
@@ -56,7 +66,7 @@ export default class Steps_page extends Component {
 
                                         </Text>
                                         <Image source={require('./images/thinLayer.png')}
-                                        />                                    
+                                        />
                                     </View>
                                     <View style={{ alignItems: 'center' }}>
                                         <Text style={{ textAlign: 'center', marginTop: 5, fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}
@@ -65,7 +75,7 @@ export default class Steps_page extends Component {
 
                                         </Text>
                                         <Image source={require('./images/mixLayers.png')}
-                                        />                                    
+                                        />
                                     </View>
                                     <View style={{ alignItems: 'center' }}>
                                         <Text style={{ textAlign: 'center', marginTop: 5, fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}
@@ -73,17 +83,17 @@ export default class Steps_page extends Component {
                                             Add water until squeezing a handful will yield a couple of drops of water.
                                         </Text>
                                         <Image source={require('./images/addWater.png')}
-                                        />                                    
+                                        />
                                     </View>
                                 </ProgressStep>
                                 <ProgressStep label="Fifth Step">
                                     <View style={{ alignItems: 'center' }}>
-                                    <Text style={{ textAlign: 'center', marginTop: 5, fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}
+                                        <Text style={{ textAlign: 'center', marginTop: 5, fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}
                                         >
                                             Continue adding layers, mixing them as you go, until pile is 3 or 4 feet high.
                                     </Text>
-                                    <Image source={require('./images/finalStep.png')}
-                                        /> 
+                                        <Image source={require('./images/finalStep.png')}
+                                        />
                                     </View>
                                 </ProgressStep>
                             </ProgressSteps>

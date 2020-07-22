@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Text, TextInput, View, Button, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { Text, TextInput, View, Button, Image, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import { API_URL } from './constants';
 
 export default class Login_page extends Component {
     constructor(props) {
@@ -31,7 +32,7 @@ export default class Login_page extends Component {
         body.append("password", this.state.password);
 
         try {
-            const response = await fetch(`http://192.168.1.71:8000/api/login`, 
+            const response = await fetch(`${API_URL}/api/login`, 
             {
                 'method':'POST',
                 body,
@@ -43,17 +44,20 @@ export default class Login_page extends Component {
 
             if (json.success) {
                 try {
+                    console.log('Working ...')
+
                     await AsyncStorage.setItem('token', json.token)
                     // this.props.logUserIn(json.token);
                     const { navigate } = this.props.navigation;
+                    this.props.updateTanks()
                     navigate('Tanks')
                     // this.props.history.push(`/profile/${result.message.id}`);
                   } catch (e) {
-                    //console.log(e);
+                    console.log(e);
                   }
             }
         } catch (error) {
-            //console.log(error);
+            console.log(error);
         }
     }
 
@@ -64,12 +68,17 @@ export default class Login_page extends Component {
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <View style={{ backgroundColor: '#27ae60', height: 50, alignItems: 'center' }}>
+                    <View style={{ backgroundColor: '#16a085', height: 50, alignItems: 'center' }}>
                         <Text
                             style={styles.page_title}
-                        >Login Here</Text>
+                        >Login</Text>
                     </View>
-                    <View style={{ paddingRight: 15, paddingLeft: 15, marginTop: 100}}>
+                    <View style={{alignItems:'center', marginTop: 30}}>
+                        <Image source={require('./images/welcome3.jpg')}
+                            style={styles.imageStyle}
+                        />
+                    </View>
+                    <View style={{ paddingRight: 15, paddingLeft: 15, marginTop: 30}}>
                         
                         <Text
                             style={styles.textStyle}
@@ -84,6 +93,7 @@ export default class Login_page extends Component {
                         >Password</Text>
                         <TextInput
                             style={styles.inputStyle}
+                            secureTextEntry={true}
                             onChangeText={text => this.setPasswordValue(text)}
                             value={this.password}
                         />
@@ -117,7 +127,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ecf0f1',
         borderWidth: 1,
         // width: 250,
-        textAlign: 'center',
+        textAlign: 'left',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -127,6 +137,8 @@ const styles = StyleSheet.create({
         shadowRadius: 2.62,
 
         elevation: 4,
+        fontSize: 18,
+
     },
     textStyle: {
         fontFamily: 'sans-serif',
@@ -160,6 +172,14 @@ const styles = StyleSheet.create({
         color: '#fff',
         textAlign: 'center',
         fontSize: 20,
+    },
+    imageStyle: {
+        width: 200,
+        height: 180,
+        borderRadius: 150 / 2,
+        overflow: "hidden",
+        borderWidth: 3,
+        borderColor: 'white'
     }
 
 })

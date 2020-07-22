@@ -4,9 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Compost;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use JWTAuth;
 
 class CompostController extends Controller
 {
+
+     /**
+     * @var
+     */
+    protected $user;
+
+    /**
+     * TaskController constructor.
+     */
+    public function __construct()
+    {
+        try {
+            $this->user = JWTAuth::parseToken()->authenticate();
+        } catch ( JWTException $error ) {
+
+        }
+    }
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +36,7 @@ class CompostController extends Controller
      */
     public function index()
     {
-        $composts = Compost::all();
+        $composts = $this->user->composts()->get();
         
         return response()->json([
             'success' => true,

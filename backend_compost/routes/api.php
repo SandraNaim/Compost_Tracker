@@ -37,10 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
      'store', 'update', 'show', 'destroy'
     ]);
 
-    Route::resource('element', 'ElementController')->only([
-    'index', 'store', 'update', 'show', 'destroy'
-    ]);
-
+   
     Route::resource('element', 'ElementController')->only([
     'index', 'store', 'update', 'show', 'destroy'
     ]);
@@ -51,3 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     
 });
+
+Route::resource('element', 'ElementController')->only([
+    'index', 'store', 'update', 'show', 'destroy'
+    ]);
