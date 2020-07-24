@@ -66,8 +66,6 @@ class App extends React.Component {
 
     try {
       const token = await AsyncStorage.getItem('token');
-
-      console.log('Token', token);
       const response = await fetch(`${API_URL}/api/compost`, {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -82,12 +80,12 @@ class App extends React.Component {
         })
       }
     } catch (error) {
-      console.log('Error ====> ', error.message)
+      //console.log('Error ====> ', error.message)
     }
   }
 
   onHandleChange = (value, name) => {
-    console.log("function",value,name)
+    //console.log("function",value,name)
   /*   this.setState({
       ...this.state.profile,
       profile:{
@@ -146,6 +144,7 @@ class App extends React.Component {
             >
               {props => <Tanks {...props} tanks={this.state.tanks} setTanks={this.setTanks} />}
             </Stack.Screen>
+            
             <Stack.Screen
               name="Fill_component"
               component={Fill_component}
@@ -190,12 +189,12 @@ class App extends React.Component {
 
             <Stack.Screen
               name="Each_Tank_Info"
-              component={Each_Tank_Info}
+              // component={Each_Tank_Info}
               options={{
                 headerShown: false
               }}
             >
-              {/* {props => <Each_Tank_Info {...props} tanks={tanks} setTanks={setTanks} />} */}
+              {props => <Each_Tank_Info {...props}   updateTanks={this.updateTanks}/>}
 
             </Stack.Screen>
 

@@ -51,15 +51,15 @@ export default class Fill_component extends Component {
         const { selectedCompostGreen, selectedCompostBrown } = this.state;
 
         const items = [];
-        console.log('selectedCompostGreen => ', selectedCompostGreen)
+        //console.log('selectedCompostGreen => ', selectedCompostGreen)
         selectedCompostGreen.map(element => {
             const element_id = element.item.value;
             let index = null;
 
             this.state.aryCharacteristics.map((ary_element, ary_index) => {
 
-                console.log('ary_element ', ary_element)
-                console.log('element_id ', element_id)
+                //console.log('ary_element ', ary_element)
+                //console.log('element_id ', element_id)
                 if (ary_element.elementId == element_id) {
                     index = ary_index
                 }
@@ -137,17 +137,30 @@ export default class Fill_component extends Component {
                 )
             }
         } catch (error) {
-            console.log('errror ===> ', error.message)
+            //console.log('errror ===> ', error.message)
         }
 
         try {
-            const response = await fetch(`${API_URL}/api/element`);
+            const { comp_id } = this.props.route.params;
+
+            const response = await fetch(`${API_URL}/api/element/comp/${comp_id}`);
             const json = await response.json();
             if (json.success === true) {
-
+                ('json: ', json.data[0].element.category)
+                let green = [], brown = [];
+                json.data.map((value, key) => {
+                    value.element.category == 'green' ?
+                        green.push({ portionGreen: value.portion, item: { label: value.element.material_name, value: value.element_id } })
+                        : brown.push({ portionBrown: value.portion, item: { label: value.element.material_name, value: value.element_id } })
+                })
                 this.setState({
-                    histComp:this.groupData(json.data),
-                });
+                    selectedCompostBrown: brown,
+                    selectedCompostGreen: green
+                }, () => {
+                    this.updatAaryCharacteristics();
+                    this.getElementsToCalculate();
+
+                })
             }
         } catch (error) {
         }
@@ -175,23 +188,26 @@ export default class Fill_component extends Component {
             )
         } else if (totalCN > 30 && totalCN < 40) {
             Alert.alert(
-                'Your result is OK'
+                'Your result is OK',
+                'The Total Ratio should be between 25 and 30'
             )
         } else if (totalCN < 20) {
             Alert.alert(
-                'Add more Brown Material'
+                'Add more Brown Material',
+                'The Total Ratio should be between 25 and 30' 
             )
         } else {
             Alert.alert(
-                'Add more Green Material'
+                'Add more Green Material',
+                'The Total Ratio should be between 25 and 30'
             )
         }
     }
 
     handleSubmit = async ({ id, portion }) => {
-        // const { comp_id } = this.props.route.params;
+        const { comp_id } = this.props.route.params;
         const body = new FormData();
-        body.append("comp_id", 2);
+        body.append("comp_id", comp_id);
         body.append("portion", portion);
         body.append("element_id", id);
         body.append("element_date", this.state.element_date);
@@ -263,7 +279,7 @@ export default class Fill_component extends Component {
         const calculateObject = new CalculateFormula(this.state.aryCharacteristics, this.state.selectItems);
 
         // console.log('this.state.aryCharacteristics => ', this.state.aryCharacteristics);
-        console.log('this.state.selectItems => ', this.state.selectItems);
+        //console.log('this.state.selectItems => ', this.state.selectItems);
 
         const calculateResult = calculateObject.getTotal();
 
@@ -287,7 +303,7 @@ export default class Fill_component extends Component {
                                     data={
                                         this.state.selectedCompostGreen
                                     }
-                                    renderItem={({ item }) => <Text style={{ fontSize: 15, textAlign: 'center' }}> Green Material: {item.item.label} / portion: {item.portionGreen} and ID: {item.item.value}
+                                    renderItem={({ item }) => <Text style={{ fontSize: 15, textAlign: 'center' }}> Green Material: {item.item.label} / portion: {item.portionGreen}
                                     </Text>}
                                 />
                                 <Text>{'\n'}</Text>
@@ -450,7 +466,7 @@ export default class Fill_component extends Component {
                                 editable={false}
                             />
 
-                            <View style={{ alignItems: 'center', marginBottom:20 }}>
+                            <View style={{ alignItems: 'center', marginBottom: 20 }}>
                                 <TouchableOpacity onPress={() => this.alertTotalCN(calculateObject.xtotalCN !== undefined ? calculateResult.xtotalCN.toString() : 0)} style={styles.buttonAlert}>
                                     <Text style={{ fontSize: 20 }}>Validate</Text>
                                 </TouchableOpacity>
@@ -511,7 +527,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         color: 'white',
         marginBottom: 10,
-         backgroundColor: 'gray',
+        backgroundColor: 'gray',
         paddingTop: 20,
         paddingBottom: 20,
         // borderStyle: 'dotted',

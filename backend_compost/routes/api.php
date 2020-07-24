@@ -52,3 +52,5 @@ Route::group(['middleware' => 'auth'], function () {
 Route::resource('element', 'ElementController')->only([
     'index', 'store', 'update', 'show', 'destroy'
     ]);
+
+    Route::get('element/comp/{id}','ElementController@show_by_compost_id' );

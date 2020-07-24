@@ -20,42 +20,73 @@ export default class History_compost extends Component {
             })
         }
     }
+    groupFilter = (data) => {
+        // arr.push(element.element_date.split(" ")[0])
+        // for(let i=0;i<5;i++)
+        // if(element.element_date.split(" ")[0]!=arr[i])
+        // arr.push(element.element_date.split(" ")[0])
+        // console.log(arr);
+        const groups = data.reduce((groups, element) => {
+            const date = element.element_date.split(' ')[0];
+            if (!groups[date]) {
+                groups[date] = [];
+            }
+            groups[date].push(element);
+            return groups;
+        }, {});
+
+        // Edit: to add it in the array format instead
+        const groupArrays = Object.keys(groups).map((date) => {
+            return {
+                date,
+                elements: groups[date]
+            };
+        });
+
+        return groupArrays;
+    }
 
     async componentDidMount() {
         try {
-            const response = await fetch(`${API_URL}/api/element`);
+            const { comp_id } = this.props.route.params;
+
+            const response = await fetch(`${API_URL}/api/element/comp/${comp_id}`);
             const json = await response.json();
             if (json.success === true) {
 
                 this.setState({
-                    histComp:this.groupData(json.data),
+                    histComp: this.groupFilter(json.data)
                 });
             }
         } catch (error) {
+            console.log("error======>", error)
         }
     }
 
     render() {
         const { navigate } = this.props.navigation;
-
         return (
             <View style={{ flex: 1, alignItems: "stretch" }}>
                 <Text
                     style={styles.componentTitle}
                 >Green / Brown Components Inside the Tank</Text>
                 <ScrollView style={{ flex: 0, height: "auto", backgroundColor: "#dfe6ed" }}>
-                    <View style={styles.containerTank}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={styles.dateTitle}>Date: </Text>
+                    {this.state.histComp.map((comp, index) => {
+                        return (
+                            <View style={styles.containerTank}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.dateTitle}>Date: {comp.date} </Text>
 
-                        </View>
-                        {this.state.histComp.map((comp, index) => {
-                            return (<View key={index} style={{ flexDirection: 'row' }}>
-                                <Text>{'\u2B24'}</Text>
-                                <Text style={styles.componentSubTitle}>{comp.element_id}</Text>
+                                </View>
+                                {comp.elements.map((element, index) => {
+                                    return (
+                                        <View key={index} style={{ flexDirection: 'row' }}>
+                                            <Text>{'\u2B24'}</Text>
+                                            <Text style={styles.componentSubTitle}>{element.element.material_name}</Text>
+                                        </View>)
+                                })}
                             </View>)
-                        })}
-                    </View>
+                    })}
                 </ScrollView>
             </View>
         )

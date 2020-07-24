@@ -11,9 +11,10 @@ export default class Each_Tank_Info extends Component {
         this.state = {
             date: '',
             compost_date: '',
-            tank_name: '',
+            tank_name: this.props.route.params.tank.tank_name,
             user_id: '',
             show: false,
+            showRefill: false,
         }
     }
 
@@ -34,10 +35,38 @@ export default class Each_Tank_Info extends Component {
         })
     }
 
+    refillDelete = async (comp_id) => {
+        try {
+            const token = await AsyncStorage.getItem('token');
+            // console.log(comp_id);
+            const response = await fetch(
+                `${API_URL}/api/element/${comp_id}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                },
+            )
+            const result = await response.json();
+            if (result.success) {
+                //console.log('result', result);
+               // const { navigate } = this.props.navigation;
+                this.props.updateTanks()
+
+                //navigate('Each_Tank_Info');
+                this.setState({
+                    showRefill: false,
+                })
+            }
+        } catch (error) {
+            //console.log('errror ===> ', error)
+        }
+    }
     handleTankDelete = async (comp_id) => {
         try {
             const token = await AsyncStorage.getItem('token');
-            console.log(comp_id);
+            //console.log(comp_id);
             const response = await fetch(
                 `${API_URL}/api/compost/${comp_id}`,
                 {
@@ -49,32 +78,42 @@ export default class Each_Tank_Info extends Component {
             )
             const result = await response.json();
             if (result.success) {
-                console.log(result);
+                //console.log(result);
                 const { navigate } = this.props.navigation;
+                this.props.updateTanks()
+
                 navigate('Tanks');
             }
         } catch (error) {
-            console.log('errror ===> ', error)
+            //console.log('errror ===> ', error)
         }
     }
-
     handleTankNameUpdate = async (comp_id) => {
 
         const body = new FormData();
         body.append("compost_date", this.state.compost_date);
-        body.append("tank_name", this.state.tank_name);
+        body.append("tank_name", 'this.state.tank_name');
         body.append("user_id", this.state.user_id);
 
-        console.log('this.state.tank_name', this.state.tank_name)
+        var urlencoded = new URLSearchParams();
+        urlencoded.append("tank_name", 'this.state.tank_name');
+        //console.log('this.state.tank_name', this.state.tank_name)
+        //console.log(`${API_URL}/api/compost/${comp_id}`);
         try {
+            const token = await AsyncStorage.getItem('token');
             const response = await fetch(
                 `${API_URL}/api/compost/${comp_id}`,
                 {
-                    method: "POST",
-                    body,
+                    method: "PUT",
+                    body: body,
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
                 }
             );
             const result = await response.json();
+            //console.log('result ->', result)
             this.setState({
                 tank_name: this.state.tank_name,
                 show: false,
@@ -82,7 +121,7 @@ export default class Each_Tank_Info extends Component {
         }
 
         catch (err) {
-            console.log("here", err)
+            //console.log("here sss", err)
         }
     }
     setNameValue = (text) => {
@@ -95,15 +134,19 @@ export default class Each_Tank_Info extends Component {
             show: false,
         })
     }
-
+    refillClose = () => {
+        this.setState({
+            showRefill: false,
+        })
+    }
     render() {
         const { navigate } = this.props.navigation;
         const { tank, comp_id } = this.props.route.params;
         return (
             <ScrollView style={{ marginLeft: 5, marginRight: 5 }}>
                 <View>
-                    <Text style={styles.tankName}>{tank.tank_name}</Text>
-                    <View style={{ marginTop: 60, position: 'relative' }}>
+                    <Text style={styles.tankName}>{this.state.tank_name}</Text>
+                    <View style={{ marginTop: 45, position: 'relative' }}>
                         <ImageBackground source={require('./images/bin.jpg')}
                             style={{
 
@@ -118,7 +161,7 @@ export default class Each_Tank_Info extends Component {
                             style={styles.SubmitButtonStyle}
                             activeOpacity={.5}
                             onPress={() =>
-                                navigate('History_compost')
+                                navigate('History_compost', { tank, comp_id })
                             }                             >
                         </TouchableOpacity>
                     </View>
@@ -140,7 +183,7 @@ export default class Each_Tank_Info extends Component {
                             name='hand-o-up'
                             backgroundColor='#16a085'
                             onPress={() =>
-                                navigate('History_compost')
+                                navigate('History_compost', { tank, comp_id })
                             }
                         >
                             <Text style={{ fontSize: 20, color: 'white' }}>Open your Tank</Text>
@@ -166,7 +209,7 @@ export default class Each_Tank_Info extends Component {
                                     transparent={true}
                                 >
                                     <View style={{ backgroundColor: '#000000aa' }}>
-                                        <View style={{ backgroundColor: '#ffffff', margin: 50, padding: 50, borderRadius: 10, }}>
+                                        <View style={{ backgroundColor: '#ffffff', margin: 50, padding: 30, borderRadius: 10, }}>
                                             <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
                                                 Update your Tank Name
                                             </Text>
@@ -211,9 +254,46 @@ export default class Each_Tank_Info extends Component {
                                 <Icon.Button
                                     name="repeat"
                                     backgroundColor='#d35400'
-                                    onPress={this.loginWithFacebook}
-                                ><Text style={{ fontSize: 20, color: "white", height: 50 }}>Refill your Tank</Text></Icon.Button>
+                                    onPress={() => { this.setState({ showRefill: true }) }}
+                                ><Text style={{ fontSize: 20, color: "white", height: 50 }}>Refill your Tank</Text>
+                                </Icon.Button>
+                                <Modal
+                                    visible={this.state.showRefill}
+                                    transparent={true}
+                                >
+                                    <View style={{ backgroundColor: '#000000aa' }}>
+                                        <View style={{ backgroundColor: '#ffffff', margin: 50, padding: 10, borderRadius: 10, height: 500 }}>
+                                            <Text style={{ fontSize: 17, fontWeight: 'bold', marginTop: 10 }}>
+                                                Are you sure you want to refill your Tank
+                                            </Text>
+                                            <Text>{'\n'}</Text>
+                                            <View style={{alignItems:'center'}}>
+                                                <Image source={require('./images/bin.jpg')} style={styles.binImage} />
+                                                <Image source={require('./images/downArrow.png')} style={styles.bownArrowImage} />
+                                                <Image source={require('./images/bin_empty.jpg')} style={styles.binEmptyImage} />
+                                            </View>
+                                            <Text>{'\n'}</Text>
+                                            <View style={{ flexDirection: 'row',padding: 15, justifyContent: 'space-between' }}>
+                                                <View style={{ width: 80 }}>
+                                                    <Button
+
+                                                        title="Refill" onPress={() => this.refillDelete(comp_id)}
+                                                    >
+                                                    </Button>
+                                                </View>
+                                                <View style={{ width: 80 }}>
+                                                    <Button
+                                                        title="Cancel" onPress={() => this.refillClose()}
+                                                    >
+                                                    </Button>
+                                                </View>
+                                            </View>
+
+                                        </View>
+                                    </View>
+                                </Modal>
                             </View>
+
                             <View style={styles.iconButtonStyle}>
                                 <Icon.Button
                                     name="trash-o"
@@ -224,8 +304,9 @@ export default class Each_Tank_Info extends Component {
                                             'Are you sure want to delete?',
                                             'This will delete your tank and you won\'t be able to recover it back',
                                             [
-                                                { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                                                 { text: 'Delete', onPress: () => this.handleTankDelete(comp_id), style: 'destructive' },
+
+                                                { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                                             ],
                                             { cancelable: false }
                                         )
@@ -246,9 +327,11 @@ const styles = StyleSheet.create({
         paddingRight: 10,
     },
     tankName: {
-        textAlign: 'center',
+        textAlign: "center",
         fontSize: 30,
-        marginTop: 30,
+        marginTop: 40,
+        fontWeight: 'bold',
+        color: '#16a085',
     },
     SubmitButtonStyle: {
         // position: "absolute",
@@ -289,8 +372,24 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         backgroundColor: 'lightgray',
         marginBottom: 20,
-
-
+    },
+    binImage: {
+        // flex: 1,
+        // resizeMode: "cover",
+        height: 100,
+        width: 200,
+    },
+    binEmptyImage: {
+        // flex: 1,
+        // resizeMode: "cover",
+        height: 100,
+        width: 200,
+    },
+    bownArrowImage: {
+        height: 50,
+        width: 60,
+        marginTop: 10,
+        marginBottom: 10,
     },
 
 })

@@ -101,14 +101,16 @@ class CompostController extends Controller
         $composts = Compost::where('id',$id)->first();
         // $composts->user_id = $inputs['user_id']; 
         // $composts->compost_date = $inputs['compost_date'];
-        // $composts->tank_name = $inputs['tank_name'];
+        // $composts->tank_name = $request->tank_name;
         $composts->update($inputs);
         
         // $composts->save();
 
         return response()->json([
             'success'=> true,
-            'data'=> $composts
+            'data'=> $composts,
+            'inputs' => $inputs,
+            'tank_name' => $request->tank_name
  
          ]);
     }

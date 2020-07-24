@@ -11,4 +11,9 @@ class Element extends Model
     ];
 
     protected $table = "element";
+
+    public function element()
+    {
+        return $this->belongsTo('App\Compost_Element');
+    }
 }

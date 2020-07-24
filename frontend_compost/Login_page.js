@@ -8,8 +8,8 @@ export default class Login_page extends Component {
         super(props);
         this.state = {
             inputValue: '',
-            email: '',
-            password: '',
+            email: 'Test',
+            password: 'Test',
         }
     }
 
@@ -44,7 +44,7 @@ export default class Login_page extends Component {
 
             if (json.success) {
                 try {
-                    console.log('Working ...')
+                    //console.log('Working ...')
 
                     await AsyncStorage.setItem('token', json.token)
                     // this.props.logUserIn(json.token);
@@ -53,11 +53,11 @@ export default class Login_page extends Component {
                     navigate('Tanks')
                     // this.props.history.push(`/profile/${result.message.id}`);
                   } catch (e) {
-                    console.log(e);
+                    //console.log(e);
                   }
             }
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
     }
 
@@ -82,7 +82,7 @@ export default class Login_page extends Component {
                         
                         <Text
                             style={styles.textStyle}
-                        >Phone / Email</Text>
+                        >Email</Text>
                         <TextInput
                             style={styles.inputStyle}
                             onChangeText={text => this.setEmailValue(text)}

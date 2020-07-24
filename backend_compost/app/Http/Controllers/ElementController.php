@@ -56,7 +56,7 @@ class ElementController extends Controller
      */
     public function show($id)
     {
-        $elements = Element::where('id',$id)->first();
+        $elements = Element::where('comp_id',$id)->get();
         return response()->json([
            'success'=> true,
            'data'=> $elements
@@ -86,7 +86,25 @@ class ElementController extends Controller
  
          ]);
     }
-    
-
+    public function destroy($id)
+    {
+        Element::where('comp_id', $id)->delete();
+        return response()->json([
+            'success'=> true,
+            'data'=> 'Successfully Deleted'
  
+         ]);
+    }
+    public function show_by_compost_id(Request $request, $id) {
+        $elements = Element::where('comp_id', $id)->with('element')->get()->all();
+
+
+
+        return response()->json([
+            'success'=> true,
+            'data'=> $elements
+ 
+         ]);
+
+    }
 }

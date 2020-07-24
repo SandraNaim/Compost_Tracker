@@ -103,7 +103,7 @@ export default class Choose_Name extends Component {
                         style={styles.SubmitButtonStyle}
                         activeOpacity={.5}
                         onPress={() => {
-                            console.log("hey I am Here =====>", this.props.tanks );
+                            //console.log("hey I am Here =====>", this.props.tanks );
                             this.props.setTanks([...this.props.tanks, { name: this.state.tank_name }])
                             // navigate('Tanks')
                             this.handleCompostSubmit()
