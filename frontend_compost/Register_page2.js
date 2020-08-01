@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Text, TextInput, View, Button, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { API_URL } from './constants';
+import AsyncStorage from '@react-native-community/async-storage';
+
+console.disableYellowBox = true;
 
 export default class Register_page2 extends Component {
     constructor(props) {
@@ -66,13 +69,18 @@ export default class Register_page2 extends Component {
 
         
         const result = await response.json();
-        if (result.success) {
+        console.log(result.data.id)
+       // if (result.success==true) {
+            //const id=toString(result.data.data.id);
+            //console.log("ss",result.data.id.toString())
+            await AsyncStorage.setItem('id',result.data.id.toString())
             //console.log('succes: ', result)
             const { navigate } = this.props.navigation;
+
             navigate('Welcome_page');
-            this.props.history.push(`/profile/${result.message.id}`);
+          //  this.props.history.push(`/profile/${result.message.id}`);
             // Swal.fire('New Client Added')
-        }
+        //}
       } catch(error) {
         //console.log('new error',error);
       }

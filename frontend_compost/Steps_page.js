@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import Fill_component from './Fill_component';
 
+console.disableYellowBox = true;
+
 export default class Steps_page extends Component {
     constructor(props) {
         super(props);
@@ -12,8 +14,11 @@ export default class Steps_page extends Component {
     }
 
     onSubmit = () => {
+       // console.log("props ==>: ", this.props.route.params.comp_id)
+        //navigate('Tanks');
         const { navigate } = this.props.navigation;
-        navigate('Welcome_page');
+        navigate('Tanks', {comp_id: this.props})
+       
     }
 
     render() {

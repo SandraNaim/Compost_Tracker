@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, Image, TextInput, View, Button, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 
+console.disableYellowBox = true;
 
 export default class Landing_page extends Component {
     constructor(props) {
@@ -20,59 +21,67 @@ export default class Landing_page extends Component {
         const { navigate } = this.props.navigation;
 
         return (
-            
-                <View style={styles.container}>
-                    
-                    <View >
-                        <Text style={styles.mycompostStyle}>
+
+            <View style={styles.container}>
+                <TouchableOpacity
+
+                    style={styles.SubmitButtonStyle}
+                    activeOpacity={.5}
+                    onPress={() =>
+                        navigate('forKarim')
+                    }                    >
+                    <Text style={styles.submit_style}> Login </Text>
+                </TouchableOpacity>
+                <View >
+                    <Text style={styles.mycompostStyle}>
                         MyCompost
                         </Text>
-                    </View>
-                    <View style={{alignItems:'center'}}>
-                        <Image source={require('./images/welcome3.jpg')}
-                            style={styles.imageStyle}
-                        />
-                    </View>
-                    <View style={{alignItems: "center"}}>
-                      <Text
+                </View>
+                <View style={{ alignItems: 'center' }}>
+                    <Image source={require('./images/welcome3.jpg')}
+                        style={styles.imageStyle}
+                    />
+                </View>
+                <View style={{ alignItems: "center" }}>
+                    <Text
                         style={styles.welcomeTitle}
-                      >Welcome
+                    >Welcome
                       </Text>
-                      {/* <Text style={styles.welcomeTitleUnder}>
+                    {/* <Text style={styles.welcomeTitleUnder}>
                           Compost Tracker
                       </Text> */}
 
-                    </View>
-                    <View style={{ paddingRight: 15, paddingLeft: 15, marginTop: 30}}>
-                        <View >
-                            {/* <Text
+                </View>
+                <View style={{ paddingRight: 15, paddingLeft: 15, marginTop: 30 }}>
+                    <View >
+                        {/* <Text
                                 style={styles.textStyle}
                             >Login here if you are a user</Text> */}
-                            <TouchableOpacity
-                                style={styles.SubmitButtonStyle}
-                                activeOpacity={.5}
-                                onPress={() =>
-                                    navigate('Login_page')
-                                }                              >
-                                <Text style={styles.submit_style}> Login </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View >
-                            <Text
-                                style={styles.textStyle}
-                            >Create new account here if you are not a user</Text>
-                            <TouchableOpacity
-                                style={styles.SubmitButtonStyle}
-                                activeOpacity={.5}
-                                onPress={() =>
-                                    navigate('Register_page')
-                                }                              >
-                                <Text style={styles.submit_style}> Register </Text>
-                            </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity
+                            style={styles.SubmitButtonStyle}
+                            activeOpacity={.5}
+                            onPress={() =>
+                                navigate('Login_page')
+                            }                              >
+                            <Text style={styles.submit_style}> Login </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View >
+                        <Text
+                            style={styles.textStyle}
+                        >  New here? Create an account.</Text>
+                        <TouchableOpacity
+                            style={styles.SubmitButtonStyle}
+                            activeOpacity={.5}
+                            onPress={() =>
+                                navigate('Register_page')
+                            }                              >
+                            <Text style={styles.submit_style}> Register </Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
-            
+            </View>
+
         )
     }
 }
@@ -100,8 +109,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     welcomeTitle: {
-        fontFamily: "Lobster-Regular", 
-        fontSize: 35, 
+        fontFamily: "Lobster-Regular",
+        fontSize: 35,
         marginTop: 30,
         // marginBottom: -30,
     },
@@ -113,11 +122,11 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         // alignItems: 'left', 
     },
-    welcomeTitleUnder:{
+    welcomeTitleUnder: {
         fontFamily: 'Georgia, Times, Times New Roman, serif',
         fontSize: 15
     },
-    
+
     SubmitButtonStyle: {
         // marginTop: 60,
         paddingTop: 10,
@@ -130,7 +139,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#fff',
         // width: 200,
-      
+
     },
     submit_style: {
         color: '#fff',
@@ -138,7 +147,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     imageStyle: {
-       
+
         width: 220,
         height: 200,
         borderRadius: 150 / 2,

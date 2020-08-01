@@ -1,4 +1,4 @@
-#Thu Jul 16 19:59:05 EEST 2020
+#Mon Jul 27 17:21:28 EEST 2020
 base.0=/home/sandra/Desktop/Compost_Tracker/frontend_compost/android/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

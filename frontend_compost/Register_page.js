@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Text, TextInput, View, Button, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 
+
+console.disableYellowBox = true;
+
 export default class Register_page extends Component {
     constructor(props) {
         super(props);
@@ -38,6 +41,7 @@ export default class Register_page extends Component {
                         {/* <View style={{ height: 50 }}>
                             <Text style={styles.personal_info}>Personal Information</Text>
                         </View> */}
+                        <Text>{"\n"}</Text>
                         <Text>{"\n"}</Text>
                         <Text>{"\n"}</Text>
                         <Text

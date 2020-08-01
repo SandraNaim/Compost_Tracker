@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Text, TextInput, View, Button, StyleSheet, ScrollView, TouchableOpacity, Alert, Image, ImageBackground, CheckBox } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-community/async-storage';
-import {API_URL} from './constants'
+import {API_URL} from './constants';
+
+console.disableYellowBox = true;
 
 
 export default class Choose_Name extends Component {
@@ -29,7 +31,10 @@ export default class Choose_Name extends Component {
                 date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
         })
     }
+    // warning _-----------------
 
+
+   
     setInputValue = (text) => {
         this.setState({
             tank_name: text
@@ -41,11 +46,14 @@ export default class Choose_Name extends Component {
         let tank_name = this.state.tank_name;
         let compost_date = this.state.compost_date;
         this.createCompostProfile({ tank_name, compost_date });
+        
+
     }
 
     createCompostProfile = async props => {
         const body = new FormData();
         body.append("tank_name", props.tank_name);
+        console.log(props.tank_name);
         body.append("compost_date", props.compost_date);
 
         try {
@@ -68,8 +76,9 @@ export default class Choose_Name extends Component {
 
                 const result = await response.json();
                 if (result.success) {
+                   // console.log("zz==> :",result.data)
                     const { navigate } = this.props.navigation;
-                    navigate('Steps_page', {comp_id: result.data.id})
+                    navigate('Steps_page', {comp_id: result.data})
                     // this.props.history.push(`/profile/${result.message.id}`);
                     // Swal.fire('New Client Added')
                 }

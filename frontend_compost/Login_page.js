@@ -3,6 +3,8 @@ import { Text, TextInput, View, Button, Image, StyleSheet, ScrollView, Touchable
 import AsyncStorage from '@react-native-community/async-storage';
 import { API_URL } from './constants';
 
+console.disableYellowBox = true;
+
 export default class Login_page extends Component {
     constructor(props) {
         super(props);
@@ -47,6 +49,7 @@ export default class Login_page extends Component {
                     //console.log('Working ...')
 
                     await AsyncStorage.setItem('token', json.token)
+                    await AsyncStorage.setItem('id', '5')
                     // this.props.logUserIn(json.token);
                     const { navigate } = this.props.navigation;
                     this.props.updateTanks()
@@ -74,9 +77,12 @@ export default class Login_page extends Component {
                         >Login</Text>
                     </View>
                     <View style={{alignItems:'center', marginTop: 30}}>
-                        <Image source={require('./images/welcome3.jpg')}
+                        {/* <Image source={require('./images/welcome3.jpg')}
                             style={styles.imageStyle}
-                        />
+                        /> */}
+                        <Text style={styles.mycompostStyle}>
+                        MyCompost
+                        </Text>
                     </View>
                     <View style={{ paddingRight: 15, paddingLeft: 15, marginTop: 30}}>
                         
@@ -180,6 +186,12 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         borderWidth: 3,
         borderColor: 'white'
-    }
+    },
+    mycompostStyle: {
+        fontFamily: 'DancingScript-VariableFont_wght',
+        textAlign: 'center',
+        fontSize: 70,
+        margin: 30,
+    },
 
 })

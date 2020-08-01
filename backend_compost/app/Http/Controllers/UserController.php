@@ -45,7 +45,7 @@ class UserController extends Controller
 
         return response()->json([
             'success'=> true,
-            'data' => $users->get()
+            'data' => $users
  
          ]);
     }
@@ -97,6 +97,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        /* $users = User::where('user_id',$id)->first();
+        return response()->json([
+           'success'=> true,
+           'data'=> $users
+
+        ]); */
     }
 }

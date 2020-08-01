@@ -5,7 +5,9 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
 
 import CalculateFormula, { cItem } from './formula';
-import { API_URL } from './constants'
+import { API_URL } from './constants';
+
+console.disableYellowBox = true;
 
 export default class Fill_component extends Component {
     constructor(props) {
@@ -297,7 +299,7 @@ export default class Fill_component extends Component {
                         <View style={{ marginBottom: 70, }}>
                             <Text
                                 style={styles.componentTitleGreen}
-                            >Green Materials {comp_id}</Text>
+                            >Green Materials </Text>
                             <View>
                                 <FlatList
                                     data={
@@ -307,12 +309,13 @@ export default class Fill_component extends Component {
                                     </Text>}
                                 />
                                 <Text>{'\n'}</Text>
-                                <View style={{ flexDirection: 'row' }}>
-
-                                    <Text style={{ fontSize: 20, marginRight: 20, marginLeft: 95 }}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginLeft: 40, marginRight: 40 }}>
+                                    
+                                    <Text style={{ fontSize: 20, marginRight: 20 }}>
                                         Add Green Materials
                                     </Text>
                                     <Icon.Button
+                                    
                                         name='plus'
                                         backgroundColor='#16a085'
                                         onPress={() => { this.setState({ showGreen: true }) }}
@@ -387,9 +390,9 @@ export default class Fill_component extends Component {
                                     </Text>}
                                 />
                                 <Text>{'\n'}</Text>
-                                <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginLeft: 40, marginRight: 40 }}>
 
-                                    <Text style={{ fontSize: 20, marginRight: 20, marginLeft: 95 }}>
+                                    <Text style={{ fontSize: 20, marginRight: 20 }}>
                                         Add Brown Materials
                                     </Text>
                                     <Icon.Button

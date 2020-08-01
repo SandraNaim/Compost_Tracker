@@ -5,6 +5,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { API_URL } from './constants';
 import AsyncStorage from '@react-native-community/async-storage';
 
+console.disableYellowBox = true;
+
 export default class Each_Tank_Info extends Component {
     constructor(props) {
         super(props);
@@ -51,7 +53,7 @@ export default class Each_Tank_Info extends Component {
             const result = await response.json();
             if (result.success) {
                 //console.log('result', result);
-               // const { navigate } = this.props.navigation;
+                // const { navigate } = this.props.navigation;
                 this.props.updateTanks()
 
                 //navigate('Each_Tank_Info');
@@ -147,10 +149,10 @@ export default class Each_Tank_Info extends Component {
                 <View>
                     <Text style={styles.tankName}>{this.state.tank_name}</Text>
                     <View style={{ marginTop: 45, position: 'relative' }}>
-                        <ImageBackground source={require('./images/bin.jpg')}
+                        <ImageBackground source={require('./images/compost3.png')}
                             style={{
 
-                                height: 200,
+                                height: 170,
                                 resizeMode: "contain",
                                 justifyContent: "center"
                             }}
@@ -162,9 +164,11 @@ export default class Each_Tank_Info extends Component {
                             activeOpacity={.5}
                             onPress={() =>
                                 navigate('History_compost', { tank, comp_id })
-                            }                             >
+                            }
+                        >
                         </TouchableOpacity>
                     </View>
+
                     <View style={{
                         // borderWidth: 2, borderColor: 'gray',
                         shadowColor: "#000",
@@ -189,7 +193,18 @@ export default class Each_Tank_Info extends Component {
                             <Text style={{ fontSize: 20, color: 'white' }}>Open your Tank</Text>
                         </Icon.Button>
                     </View>
-                    <View style={{ marginTop: 70 }}>
+
+                    <View style={styles.tempContainer}>
+                        <TouchableOpacity style={styles.tempButton} onPress={() =>
+                            navigate('Climate_control')
+                        }>
+                            <Image source={require("./images/temp_hum.jpg")} style={styles.temp_hum_image} />
+                            {/* <Text>Climate Control Measurements</Text> */}
+
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{ marginTop: 30, paddingLeft: 20, paddingRight: 20 }}>
                         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                             <View style={styles.iconButtonStyle}>
                                 <Icon.Button
@@ -245,7 +260,7 @@ export default class Each_Tank_Info extends Component {
                                     onPress={() =>
                                         navigate('Fill_component', { tank, comp_id })
                                     }
-                                ><Text style={{ fontSize: 20, color: "white", height: 50 }}>Add Components</Text></Icon.Button>
+                                ><Text style={{ fontSize: 20, color: "white", height: 50 }}>Add Materials</Text></Icon.Button>
                             </View>
                         </View>
 
@@ -267,13 +282,13 @@ export default class Each_Tank_Info extends Component {
                                                 Are you sure you want to refill your Tank
                                             </Text>
                                             <Text>{'\n'}</Text>
-                                            <View style={{alignItems:'center'}}>
+                                            <View style={{ alignItems: 'center' }}>
                                                 <Image source={require('./images/bin.jpg')} style={styles.binImage} />
                                                 <Image source={require('./images/downArrow.png')} style={styles.bownArrowImage} />
                                                 <Image source={require('./images/bin_empty.jpg')} style={styles.binEmptyImage} />
                                             </View>
                                             <Text>{'\n'}</Text>
-                                            <View style={{ flexDirection: 'row',padding: 15, justifyContent: 'space-between' }}>
+                                            <View style={{ flexDirection: 'row', padding: 15, justifyContent: 'space-between' }}>
                                                 <View style={{ width: 80 }}>
                                                     <Button
 
@@ -331,18 +346,24 @@ const styles = StyleSheet.create({
         fontSize: 30,
         marginTop: 40,
         fontWeight: 'bold',
-        color: '#16a085',
+        color: 'black',
+        textShadowOffset: {
+            width: 2,
+            height: 1
+          },
+          textShadowColor: '#16a085',
+          textShadowRadius: 1
     },
     SubmitButtonStyle: {
         // position: "absolute",
         // top: 10,
-        height: 200,
+        height: 170,
         // paddingTop: 10,
         // paddingBottom: 10,
         backgroundColor: 'transparent',
         borderRadius: 10,
-        borderWidth: 1,
-        borderColor: '#fff',
+        //borderWidth: 1,
+        //borderColor: '#fff',
         width: 'auto',
         zIndex: 3,
         alignItems: 'center',
@@ -357,7 +378,7 @@ const styles = StyleSheet.create({
         top: 120,
     },
     iconButtonStyle: {
-        width: 150,
+        width: 140,
     },
     inputStyle: {
         marginTop: 10,
@@ -391,5 +412,35 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
     },
+    tempButton: {
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 10,
+        marginBottom: 20,
+        // shadowColor: '#303838',
+        // shadowOffset: { width: 0, height: 5 },
+        shadowRadius: 10,
+        // shadowOpacity: 0.35,
+        borderColor: '#16a085',
+        borderWidth: 2,
+        width: 'auto',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 8,
+        },
+        shadowOpacity: 0.46,
+        shadowRadius: 11.14,
+
+        elevation: 17,
+    },
+    temp_hum_image: {
+        width: 50,
+        height: 50,
+    },
+    tempContainer: {
+        alignItems: 'center',
+        marginTop: 30
+    }
 
 })

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Text, TextInput, View, Button, StyleSheet, ScrollView, TouchableOpacity, Alert, Image, ImageBackground, CheckBox } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { API_URL } from './constants'
+import { API_URL } from './constants';
+
+console.disableYellowBox = true;
 
 
 export default class History_compost extends Component {
@@ -59,7 +61,7 @@ export default class History_compost extends Component {
                 });
             }
         } catch (error) {
-            console.log("error======>", error)
+            //console.log("error======>", error)
         }
     }
 
@@ -80,7 +82,7 @@ export default class History_compost extends Component {
                                 </View>
                                 {comp.elements.map((element, index) => {
                                     return (
-                                        <View key={index} style={{ flexDirection: 'row' }}>
+                                        <View key={index} style={{ flexDirection: 'row', padding: 3 }}>
                                             <Text>{'\u2B24'}</Text>
                                             <Text style={styles.componentSubTitle}>{element.element.material_name}</Text>
                                         </View>)
@@ -100,25 +102,38 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
     containerTank: {
-        borderBottomColor: 'black',
-        borderBottomWidth: 1,
-        paddingBottom: 50,
+        borderWidth: 1,
+        borderRadius: 2,
+        borderColor: '#ddd',
+        borderBottomWidth: 0,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 1,
+        marginLeft: 5,
+        marginRight: 5,
+        marginTop: 10,
+        backgroundColor: 'white',
+        padding: 20
     },
     componentTitle: {
-        fontSize: 20,
+        textAlign: "center",
+        fontSize: 30,
+        marginTop: 30,
         fontWeight: 'bold',
-        textAlign: 'center',
-        marginTop: 50,
-        marginBottom: 50,
+        color: '#16a085',
+        paddingBottom:10
     },
     dateTitle: {
         fontSize: 20,
-        fontStyle: 'italic',
+        //fontStyle: 'italic',
         textDecorationLine: 'underline',
         color: '#16a085',
     },
     componentSubTitle: {
-        fontSize: 15,
+        fontSize: 17,
+        paddingLeft: 5
     }
 
 

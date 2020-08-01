@@ -77,7 +77,7 @@ class CompostController extends Controller
      */
     public function show($id)
     {
-        $composts = Compost::where('id',$id)->first();
+        $composts = Compost::where('user_id',$id)->get();
         return response()->json([
            'success'=> true,
            'data'=> $composts

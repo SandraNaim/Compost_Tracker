@@ -36,6 +36,8 @@ import History_compost from './History_compost';
 import test from './test';
 import Welcome_page from './Welcome_page';
 import { API_URL } from './constants';
+import forKarim from './forKarim';
+// import Thermometer_page from './Thermometer_page';
 
 const Stack = createStackNavigator();
 
@@ -66,7 +68,8 @@ class App extends React.Component {
 
     try {
       const token = await AsyncStorage.getItem('token');
-      const response = await fetch(`${API_URL}/api/compost`, {
+      const id =await AsyncStorage.getItem('id')
+      const response = await fetch(`${API_URL}/api/compost/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Accept': 'application/jsom'
@@ -112,9 +115,24 @@ class App extends React.Component {
       <>
         <NavigationContainer>
           <Stack.Navigator>
+          {/* <Stack.Screen
+              name="Thermometer_page"
+              component={Thermometer_page}
+              options={{
+                headerShown: false
+              }}
+            /> */}
+          
           <Stack.Screen
               name="Landing_page"
               component={Landing_page}
+              options={{
+                headerShown: false
+              }}
+            />
+            <Stack.Screen
+              name="forKarim"
+              component={forKarim}
               options={{
                 headerShown: false
               }}

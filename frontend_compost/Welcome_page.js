@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, TextInput, Dimensions, Image, View, Button, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 
+console.disableYellowBox = true;
 
 export default class Welcome_page extends Component {
     constructor(props) {
